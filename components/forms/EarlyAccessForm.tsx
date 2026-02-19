@@ -159,7 +159,7 @@ function FloatingInput({
         id={id}
         type={type}
         placeholder=" "
-        className={`peer w-full bg-white/[0.03] border rounded-glass px-5 pt-6 pb-2 text-sm text-foreground outline-none transition-all duration-200 placeholder-transparent
+        className={`peer w-full bg-white/80 border rounded-glass px-5 pt-6 pb-2 text-sm text-foreground outline-none transition-all duration-200 placeholder-transparent
           ${error ? "border-red-500/50 focus:border-red-500" : "border-border focus:border-primary/50"}
           focus:ring-1 ${error ? "focus:ring-red-500/20" : "focus:ring-primary/20"}`}
         {...registration}

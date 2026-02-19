@@ -18,7 +18,7 @@ export default function EarlyAccess() {
           </h2>
           <p className="text-muted text-lg max-w-xl mx-auto leading-relaxed">
             Be among the first to experience Neuro Nurture. No cost, no
-            obligation — just priority access to the future of neurological care.
+            obligation — just priority access to game-based developmental support.
           </p>
         </div>
       </ScrollReveal>

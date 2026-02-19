@@ -41,11 +41,11 @@ export default function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
         style={{
           backgroundColor: scrolled
-            ? "rgba(5, 6, 8, 0.85)"
-            : "rgba(5, 6, 8, 0)",
+            ? "rgba(254, 252, 249, 0.9)"
+            : "rgba(254, 252, 249, 0)",
           backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
           borderBottom: scrolled
-            ? "1px solid rgba(255,255,255,0.08)"
+            ? "1px solid rgba(0,0,0,0.06)"
             : "1px solid transparent",
         }}
         animate={

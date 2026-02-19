@@ -23,7 +23,7 @@ export default function GlassCard({
       className={`glass rounded-card p-8 ${glow ? "shadow-glow" : ""} ${className}`}
       whileHover={
         hover && !prefersReducedMotion
-          ? { y: -4, boxShadow: "0 0 40px rgba(24, 210, 196, 0.15)" }
+          ? { y: -4, boxShadow: "0 4px 30px rgba(13, 148, 136, 0.12)" }
           : undefined
       }
       transition={{ duration: 0.3, ease: "easeOut" }}

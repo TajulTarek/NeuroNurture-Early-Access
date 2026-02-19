@@ -32,7 +32,7 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-primary text-background hover:bg-primary-dark shadow-glow",
+      "bg-primary text-white hover:bg-primary-dark shadow-glow",
     ghost:
       "bg-transparent text-foreground border border-border hover:border-primary/40 hover:text-primary",
   };

@@ -9,14 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#050608",
-        foreground: "#F5F7FA",
-        primary: "#18D2C4",
-        muted: "#A7B0B8",
-        border: "rgba(255,255,255,0.08)",
-        card: "rgba(255,255,255,0.04)",
-        "primary-dark": "#14B8A6",
-        "primary-glow": "rgba(24, 210, 196, 0.15)",
+        background: "#FEFCF9",
+        foreground: "#1E293B",
+        primary: "#0D9488",
+        muted: "#64748B",
+        border: "rgba(0,0,0,0.08)",
+        card: "rgba(255,255,255,0.7)",
+        "primary-dark": "#0F766E",
+        "primary-glow": "rgba(13, 148, 136, 0.12)",
+        "warm-50": "#FFF7ED",
+        "warm-100": "#FFEDD5",
+        "warm-200": "#FED7AA",
+        "peach": "#FECACA",
+        "sky-light": "#E0F2FE",
+        "lavender": "#EDE9FE",
       },
       fontFamily: {
         sans: [
@@ -42,9 +48,11 @@ const config: Config = {
         "section-sm": "80px",
       },
       boxShadow: {
-        glow: "0 0 40px rgba(24, 210, 196, 0.15)",
-        "glow-lg": "0 0 80px rgba(24, 210, 196, 0.2)",
-        "glow-sm": "0 0 20px rgba(24, 210, 196, 0.1)",
+        glow: "0 4px 40px rgba(13, 148, 136, 0.12)",
+        "glow-lg": "0 8px 60px rgba(13, 148, 136, 0.15)",
+        "glow-sm": "0 2px 20px rgba(13, 148, 136, 0.08)",
+        soft: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)",
+        "soft-lg": "0 4px 24px rgba(0,0,0,0.08)",
       },
       backdropBlur: {
         glass: "16px",

@@ -10,15 +10,15 @@ html {
 }
 
 body {
-  background-color: #050608;
-  color: #F5F7FA;
+  background-color: #FEFCF9;
+  color: #1E293B;
   overflow-x: hidden;
 }
 
 /* ─── Selection ─── */
 ::selection {
-  background-color: rgba(24, 210, 196, 0.25);
-  color: #F5F7FA;
+  background-color: rgba(13, 148, 136, 0.2);
+  color: #1E293B;
 }
 
 /* ─── Scrollbar ─── */
@@ -27,16 +27,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050608;
+  background: #FEFCF9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(24, 210, 196, 0.3);
+  background: rgba(13, 148, 136, 0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(24, 210, 196, 0.5);
+  background: rgba(13, 148, 136, 0.4);
 }
 
 /* ─── Reduced Motion ─── */
@@ -53,7 +53,7 @@ body {
 
 /* ─── Gradient Text Utility ─── */
 .text-gradient {
-  background: linear-gradient(135deg, #18D2C4 0%, #14B8A6 50%, #0EA5E9 100%);
+  background: linear-gradient(135deg, #0D9488 0%, #0F766E 50%, #0284C7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -61,10 +61,11 @@ body {
 
 /* ─── Glass Utility ─── */
 .glass {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
 }
 
 /* ─── Gradient Background Shift ─── */

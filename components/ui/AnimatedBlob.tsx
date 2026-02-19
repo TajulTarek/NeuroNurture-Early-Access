@@ -10,9 +10,9 @@ interface AnimatedBlobProps {
 }
 
 const colorMap = {
-  teal: "bg-primary/20",
-  blue: "bg-blue-500/15",
-  purple: "bg-purple-500/10",
+  teal: "bg-primary/10",
+  blue: "bg-blue-300/15",
+  purple: "bg-purple-300/10",
 };
 
 const sizeMap = {

@@ -90,7 +90,7 @@ export default function Solution() {
                       )}
                     </div>
                   </div>
-                  <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                  <div className="h-2 bg-black/[0.04] rounded-full overflow-hidden">
                     <motion.div
                       className={`h-full rounded-full ${SIGNAL_COLORS[signal.trend]} opacity-70`}
                       initial={
@@ -112,7 +112,7 @@ export default function Solution() {
             </div>
 
             {/* Insight Tile */}
-            <div className="bg-primary/[0.06] border border-primary/20 rounded-glass p-4 mb-4 flex items-start gap-3">
+            <div className="bg-primary/[0.08] border border-primary/15 rounded-glass p-4 mb-4 flex items-start gap-3">
               <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center mt-0.5">
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
               </div>
@@ -129,7 +129,7 @@ export default function Solution() {
             </div>
 
             {/* Next Activity */}
-            <div className="bg-white/[0.03] border border-border rounded-glass p-4 flex items-center justify-between group hover:border-primary/30 transition-colors duration-300">
+            <div className="bg-white/60 border border-border rounded-glass p-4 flex items-center justify-between group hover:border-primary/30 transition-colors duration-300">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center">
                   <ArrowRight className="w-4 h-4 text-blue-400" />

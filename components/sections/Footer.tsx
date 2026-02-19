@@ -12,9 +12,8 @@ export default function Footer() {
               Neuro Nurture
             </div>
             <p className="text-sm text-muted leading-relaxed max-w-sm">
-              The AI-powered platform unifying neurological signal capture,
-              analytics, and care coordination for the next generation of
-              brain health.
+              Game-based developmental support for children on the autism
+              spectrum — guided by AI insights across home, school, and clinic.
             </p>
           </div>
 
@@ -82,7 +81,7 @@ export default function Footer() {
             reserved.
           </p>
           <p className="text-xs text-muted/40">
-            Built with care for the future of neurological health.
+            Built with care for every child’s developmental journey.
           </p>
         </div>
       </div>

@@ -60,7 +60,7 @@ export default function HowItWorks() {
               }}
             >
               {/* Step Number */}
-              <div className="absolute left-4 md:left-8 w-8 h-8 rounded-full border-2 border-primary bg-background flex items-center justify-center shadow-glow-sm">
+              <div className="absolute left-4 md:left-8 w-8 h-8 rounded-full border-2 border-primary bg-white flex items-center justify-center shadow-glow-sm">
                 <span className="text-xs font-bold text-primary">
                   {step.step}
                 </span>

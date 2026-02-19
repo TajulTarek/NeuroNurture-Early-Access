@@ -85,7 +85,7 @@ export default function PrivacyControl() {
               {TOGGLES.map((toggle, i) => (
                 <div
                   key={toggle.label}
-                  className="flex items-center justify-between py-3 px-4 bg-white/[0.02] rounded-glass border border-border"
+                  className="flex items-center justify-between py-3 px-4 bg-white/50 rounded-glass border border-border"
                 >
                   <div className="flex items-center gap-3">
                     <toggle.icon className="w-4 h-4 text-muted" strokeWidth={1.5} />
@@ -95,7 +95,7 @@ export default function PrivacyControl() {
                   </div>
                   <button
                     className={`relative w-11 h-6 rounded-full transition-colors duration-300 ${
-                      toggleStates[i] ? "bg-primary" : "bg-white/10"
+                      toggleStates[i] ? "bg-primary" : "bg-black/10"
                     }`}
                     aria-label={`Toggle ${toggle.label}`}
                     onClick={() =>
