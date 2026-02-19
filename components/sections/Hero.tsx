@@ -24,59 +24,22 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Warm gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-warm-50 via-background to-sky-light/30 pointer-events-none" />
-
-      {/* Child illustration background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -bottom-20 -right-20 w-[600px] h-[600px] opacity-[0.06]">
-          <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-            {/* Playful child silhouettes */}
-            <circle cx="200" cy="120" r="45" fill="#0D9488"/>
-            <ellipse cx="200" cy="230" rx="60" ry="75" fill="#0D9488"/>
-            <circle cx="160" cy="280" r="12" fill="#0D9488"/>
-            <circle cx="240" cy="280" r="12" fill="#0D9488"/>
-            {/* Stars / sparkles */}
-            <path d="M80 60 L85 75 L100 80 L85 85 L80 100 L75 85 L60 80 L75 75Z" fill="#F59E0B"/>
-            <path d="M320 50 L323 58 L331 61 L323 64 L320 72 L317 64 L309 61 L317 58Z" fill="#0D9488"/>
-            <path d="M50 200 L53 208 L61 211 L53 214 L50 222 L47 214 L39 211 L47 208Z" fill="#8B5CF6"/>
-            <path d="M340 180 L343 188 L351 191 L343 194 L340 202 L337 194 L329 191 L337 188Z" fill="#F59E0B"/>
-            {/* Puzzle piece */}
-            <path d="M280 300 Q295 300 295 315 Q310 315 310 330 Q310 345 295 345 Q295 360 280 360 Q265 360 265 345 Q250 345 250 330 Q250 315 265 315 Q265 300 280 300Z" fill="#0D9488" opacity="0.5"/>
-            {/* Heart */}
-            <path d="M100 320 C100 310 115 305 120 315 C125 305 140 310 140 320 C140 335 120 350 120 350 C120 350 100 335 100 320Z" fill="#F87171" opacity="0.4"/>
-            {/* Game controller outline */}
-            <rect x="60" y="130" width="50" height="35" rx="10" fill="#0D9488" opacity="0.3"/>
-            <circle cx="75" cy="147" r="5" fill="#FEFCF9"/>
-            <circle cx="95" cy="147" r="5" fill="#FEFCF9"/>
-          </svg>
-        </div>
-        <div className="absolute -top-10 -left-10 w-[400px] h-[400px] opacity-[0.04]">
-          <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-            <circle cx="150" cy="100" r="35" fill="#8B5CF6"/>
-            <ellipse cx="150" cy="190" rx="45" ry="60" fill="#8B5CF6"/>
-            <path d="M50 250 L55 265 L70 270 L55 275 L50 290 L45 275 L30 270 L45 265Z" fill="#F59E0B"/>
-            <path d="M250 40 L254 52 L266 56 L254 60 L250 72 L246 60 L234 56 L246 52Z" fill="#0D9488"/>
-          </svg>
-        </div>
-      </div>
-
       {/* Background Blobs */}
       <AnimatedBlob
         color="teal"
         size="lg"
-        className="-top-40 -right-40 opacity-30"
+        className="-top-40 -right-40 opacity-40"
       />
       <AnimatedBlob
         color="purple"
         size="md"
-        className="bottom-20 -left-40 opacity-20"
+        className="bottom-20 -left-40 opacity-30"
         delay={4}
       />
       <AnimatedBlob
         color="blue"
         size="sm"
-        className="top-1/3 left-1/4 opacity-15"
+        className="top-1/3 left-1/4 opacity-20"
         delay={2}
       />
 
@@ -177,7 +140,7 @@ export default function Hero() {
               {METRICS.map((m, i) => (
                 <motion.div
                   key={m.label}
-                  className="bg-white/60 rounded-glass p-4 border border-border group hover:border-primary/30 transition-colors duration-300"
+                  className="bg-white/[0.03] rounded-glass p-4 border border-border group hover:border-primary/30 transition-colors duration-300"
                   initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 + i * 0.1, duration: 0.5 }}
@@ -189,7 +152,7 @@ export default function Hero() {
             </div>
 
             {/* Chart Placeholder */}
-            <div className="bg-white/60 rounded-glass p-5 border border-border mb-5">
+            <div className="bg-white/[0.03] rounded-glass p-5 border border-border mb-5">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-xs text-muted">Session Progress</p>
                 <div className="flex gap-3">
@@ -236,7 +199,7 @@ export default function Hero() {
 
             {/* AI Summary Bubble */}
             <motion.div
-              className="bg-primary/[0.08] border border-primary/15 rounded-glass p-4 flex items-start gap-3"
+              className="bg-primary/[0.06] border border-primary/20 rounded-glass p-4 flex items-start gap-3"
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.4, duration: 0.5 }}

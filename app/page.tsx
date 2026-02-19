@@ -11,18 +11,12 @@ import PrivacyControl from "@/components/sections/PrivacyControl";
 import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
 import EarlyAccess from "@/components/sections/EarlyAccess";
+import Founders from "@/components/sections/Founders";
 import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <main className="relative">
-      {/* Subtle warm decorative blobs throughout */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-[30%] -right-40 w-[500px] h-[500px] bg-warm-100/40 rounded-full blur-[120px]" />
-        <div className="absolute top-[60%] -left-40 w-[400px] h-[400px] bg-sky-light/40 rounded-full blur-[120px]" />
-        <div className="absolute top-[85%] right-20 w-[300px] h-[300px] bg-lavender/30 rounded-full blur-[120px]" />
-      </div>
-
+    <main>
       <Navbar />
       <Hero />
       <SocialProof />
@@ -36,6 +30,7 @@ export default function Home() {
       <FAQ />
       <FinalCTA />
       <EarlyAccess />
+      <Founders />
       <Footer />
     </main>
   );

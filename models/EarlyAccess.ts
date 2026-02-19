@@ -1,16 +1,28 @@
 import mongoose, { Schema, type Document } from "mongoose";
 
 export interface IEarlyAccess extends Document {
-  firstName: string;
-  lastName: string;
+  role: "parent" | "school" | "doctor";
+  // Parent fields
+  name?: string;
   email: string;
-  phone: string;
+  childName?: string;
+  childAge?: number;
+  // School fields
+  schoolName?: string;
+  address?: string;
+  // Doctor fields
+  specialization?: string;
   createdAt: Date;
 }
 
 const EarlyAccessSchema = new Schema<IEarlyAccess>({
-  firstName: { type: String, required: true, trim: true },
-  lastName: { type: String, required: true, trim: true },
+  role: {
+    type: String,
+    required: true,
+    enum: ["parent", "school", "doctor"],
+    index: true,
+  },
+  name: { type: String, trim: true },
   email: {
     type: String,
     required: true,
@@ -19,7 +31,11 @@ const EarlyAccessSchema = new Schema<IEarlyAccess>({
     trim: true,
     index: true,
   },
-  phone: { type: String, required: true, trim: true },
+  childName: { type: String, trim: true },
+  childAge: { type: Number },
+  schoolName: { type: String, trim: true },
+  address: { type: String, trim: true },
+  specialization: { type: String, trim: true },
   createdAt: { type: Date, default: Date.now },
 });
 

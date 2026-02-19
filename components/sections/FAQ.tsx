@@ -49,7 +49,7 @@ export default function FAQ() {
                 {item.question}
               </span>
               <motion.span
-                className="flex-shrink-0 w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center shadow-sm"
+                className="flex-shrink-0 w-8 h-8 rounded-full bg-card border border-border flex items-center justify-center"
                 animate={{ rotate: openIndex === i ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
               >

@@ -4,32 +4,61 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { earlyAccessSchema, type EarlyAccessFormData } from "@/lib/validators";
-import type { EarlyAccessResponse } from "@/types";
+import {
+  parentSchema,
+  schoolSchema,
+  doctorSchema,
+  type EarlyAccessFormData,
+  type ParentFormData,
+  type SchoolFormData,
+  type DoctorFormData,
+} from "@/lib/validators";
+import type { EarlyAccessResponse, UserRole } from "@/types";
 import Button from "@/components/ui/Button";
 
+/* ─── Role Tab Config ─── */
+const ROLES: { value: UserRole; label: string; icon: string }[] = [
+  { value: "parent", label: "Parent", icon: "👨‍👩‍👧" },
+  { value: "school", label: "School", icon: "🏫" },
+  { value: "doctor", label: "Doctor", icon: "🩺" },
+];
+
+const schemaMap = {
+  parent: parentSchema,
+  school: schoolSchema,
+  doctor: doctorSchema,
+} as const;
+
 export default function EarlyAccessForm() {
+  const [role, setRole] = useState<UserRole>("parent");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [serverError, setServerError] = useState("");
   const prefersReducedMotion = useReducedMotion();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    reset,
-  } = useForm<EarlyAccessFormData>({
-    resolver: zodResolver(earlyAccessSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-    },
+  const parentForm = useForm<ParentFormData>({
+    resolver: zodResolver(schemaMap.parent),
+    defaultValues: { role: "parent", name: "", email: "", childName: "", childAge: undefined as unknown as number },
   });
 
-  const watchedFields = watch();
+  const schoolForm = useForm<SchoolFormData>({
+    resolver: zodResolver(schemaMap.school),
+    defaultValues: { role: "school", schoolName: "", address: "", email: "" },
+  });
+
+  const doctorForm = useForm<DoctorFormData>({
+    resolver: zodResolver(schemaMap.doctor),
+    defaultValues: { role: "doctor", name: "", email: "", specialization: "", address: "" },
+  });
+
+  const forms = { parent: parentForm, school: schoolForm, doctor: doctorForm };
+  const currentForm = forms[role];
+
+  const switchRole = (newRole: UserRole) => {
+    if (newRole === role) return;
+    setRole(newRole);
+    setStatus("idle");
+    setServerError("");
+  };
 
   const onSubmit = async (data: EarlyAccessFormData) => {
     setStatus("loading");
@@ -46,7 +75,7 @@ export default function EarlyAccessForm() {
 
       if (result.success) {
         setStatus("success");
-        reset();
+        currentForm.reset();
       } else {
         setStatus("error");
         setServerError(result.message || "Something went wrong. Please try again.");
@@ -58,52 +87,120 @@ export default function EarlyAccessForm() {
   };
 
   if (status === "success") {
-    return <SuccessState reducedMotion={prefersReducedMotion ?? false} />;
+    return <SuccessState reducedMotion={prefersReducedMotion ?? false} onReset={() => setStatus("idle")} />;
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
-      {/* Name Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <FloatingInput
-          id="firstName"
-          label="First Name"
-          type="text"
-          error={errors.firstName?.message}
-          hasValue={!!watchedFields.firstName}
-          registration={register("firstName")}
-        />
-        <FloatingInput
-          id="lastName"
-          label="Last Name"
-          type="text"
-          error={errors.lastName?.message}
-          hasValue={!!watchedFields.lastName}
-          registration={register("lastName")}
-        />
+    <div className="space-y-6">
+      {/* Role Tabs */}
+      <div className="flex rounded-glass overflow-hidden border border-border">
+        {ROLES.map((r) => (
+          <button
+            key={r.value}
+            type="button"
+            onClick={() => switchRole(r.value)}
+            className={`flex-1 py-3 px-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2
+              ${
+                role === r.value
+                  ? "bg-primary/15 text-primary border-b-2 border-primary"
+                  : "text-muted hover:text-foreground hover:bg-white/[0.03]"
+              }`}
+          >
+            <span className="text-base">{r.icon}</span>
+            {r.label}
+          </button>
+        ))}
       </div>
 
-      {/* Email */}
-      <FloatingInput
-        id="email"
-        label="Email Address"
-        type="email"
-        error={errors.email?.message}
-        hasValue={!!watchedFields.email}
-        registration={register("email")}
-      />
+      {/* Form per role */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={role}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={prefersReducedMotion ? {} : { opacity: 0, y: -8 }}
+          transition={{ duration: 0.2 }}
+        >
+          {role === "parent" && (
+            <ParentFields form={parentForm} status={status} serverError={serverError} onSubmit={onSubmit} />
+          )}
+          {role === "school" && (
+            <SchoolFields form={schoolForm} status={status} serverError={serverError} onSubmit={onSubmit} />
+          )}
+          {role === "doctor" && (
+            <DoctorFields form={doctorForm} status={status} serverError={serverError} onSubmit={onSubmit} />
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
-      {/* Phone */}
-      <FloatingInput
-        id="phone"
-        label="Phone Number"
-        type="tel"
-        error={errors.phone?.message}
-        hasValue={!!watchedFields.phone}
-        registration={register("phone")}
-      />
+/* ═══════════════════════════════════════════════
+   Per-Role Form Sections
+   ═══════════════════════════════════════════════ */
 
-      {/* Server Error */}
+interface FormSectionProps<T extends EarlyAccessFormData> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  status: string;
+  serverError: string;
+  onSubmit: (data: T) => void;
+}
+
+function ParentFields({ form, status, serverError, onSubmit }: FormSectionProps<ParentFormData>) {
+  const { register, handleSubmit, formState: { errors }, watch } = form;
+  const w = watch();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+      <input type="hidden" {...register("role")} />
+      <FloatingInput id="p-name" label="Your Name" type="text" error={errors.name?.message} hasValue={!!w.name} registration={register("name")} />
+      <FloatingInput id="p-email" label="Email Address" type="email" error={errors.email?.message} hasValue={!!w.email} registration={register("email")} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <FloatingInput id="p-childName" label="Child's Name" type="text" error={errors.childName?.message} hasValue={!!w.childName} registration={register("childName")} />
+        <FloatingInput id="p-childAge" label="Child's Age" type="number" error={errors.childAge?.message} hasValue={w.childAge !== undefined && w.childAge !== ""} registration={register("childAge", { valueAsNumber: true })} />
+      </div>
+      <FormFooter status={status} serverError={serverError} />
+    </form>
+  );
+}
+
+function SchoolFields({ form, status, serverError, onSubmit }: FormSectionProps<SchoolFormData>) {
+  const { register, handleSubmit, formState: { errors }, watch } = form;
+  const w = watch();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+      <input type="hidden" {...register("role")} />
+      <FloatingInput id="s-schoolName" label="School Name" type="text" error={errors.schoolName?.message} hasValue={!!w.schoolName} registration={register("schoolName")} />
+      <FloatingInput id="s-email" label="Email Address" type="email" error={errors.email?.message} hasValue={!!w.email} registration={register("email")} />
+      <FloatingInput id="s-address" label="Address" type="text" error={errors.address?.message} hasValue={!!w.address} registration={register("address")} />
+      <FormFooter status={status} serverError={serverError} />
+    </form>
+  );
+}
+
+function DoctorFields({ form, status, serverError, onSubmit }: FormSectionProps<DoctorFormData>) {
+  const { register, handleSubmit, formState: { errors }, watch } = form;
+  const w = watch();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+      <input type="hidden" {...register("role")} />
+      <FloatingInput id="d-name" label="Your Name" type="text" error={errors.name?.message} hasValue={!!w.name} registration={register("name")} />
+      <FloatingInput id="d-email" label="Email Address" type="email" error={errors.email?.message} hasValue={!!w.email} registration={register("email")} />
+      <FloatingInput id="d-specialization" label="Specialization" type="text" error={errors.specialization?.message} hasValue={!!w.specialization} registration={register("specialization")} />
+      <FloatingInput id="d-address" label="Clinic / Hospital Address" type="text" error={errors.address?.message} hasValue={!!w.address} registration={register("address")} />
+      <FormFooter status={status} serverError={serverError} />
+    </form>
+  );
+}
+
+/* ─── Shared Submit + Error Footer ─── */
+function FormFooter({ status, serverError }: { status: string; serverError: string }) {
+  return (
+    <>
       <AnimatePresence>
         {status === "error" && serverError && (
           <motion.div
@@ -117,22 +214,14 @@ export default function EarlyAccessForm() {
         )}
       </AnimatePresence>
 
-      {/* Submit */}
-      <Button
-        type="submit"
-        fullWidth
-        loading={status === "loading"}
-        className="!py-4 text-base"
-      >
+      <Button type="submit" fullWidth loading={status === "loading"} className="!py-4 text-base">
         Request Early Access
       </Button>
 
-      {/* Microcopy */}
       <p className="text-xs text-muted/60 text-center leading-relaxed">
-        By registering, you agree to be contacted regarding Neuro
-        Nurture&apos;s pilot program.
+        By registering, you agree to be contacted regarding Neuro Nurture&apos;s pilot program.
       </p>
-    </form>
+    </>
   );
 }
 
@@ -159,7 +248,7 @@ function FloatingInput({
         id={id}
         type={type}
         placeholder=" "
-        className={`peer w-full bg-white/80 border rounded-glass px-5 pt-6 pb-2 text-sm text-foreground outline-none transition-all duration-200 placeholder-transparent
+        className={`peer w-full bg-white/[0.03] border rounded-glass px-5 pt-6 pb-2 text-sm text-foreground outline-none transition-all duration-200 placeholder-transparent
           ${error ? "border-red-500/50 focus:border-red-500" : "border-border focus:border-primary/50"}
           focus:ring-1 ${error ? "focus:ring-red-500/20" : "focus:ring-primary/20"}`}
         {...registration}
@@ -190,7 +279,7 @@ function FloatingInput({
 }
 
 /* ─── Success Animation ─── */
-function SuccessState({ reducedMotion }: { reducedMotion: boolean }) {
+function SuccessState({ reducedMotion, onReset }: { reducedMotion: boolean; onReset: () => void }) {
   return (
     <motion.div
       className="text-center py-12"
@@ -237,7 +326,7 @@ function SuccessState({ reducedMotion }: { reducedMotion: boolean }) {
         You&apos;re on the list!
       </motion.h3>
       <motion.p
-        className="text-muted text-sm leading-relaxed max-w-sm mx-auto"
+        className="text-muted text-sm leading-relaxed max-w-sm mx-auto mb-6"
         initial={reducedMotion ? {} : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.75 }}
@@ -245,6 +334,16 @@ function SuccessState({ reducedMotion }: { reducedMotion: boolean }) {
         Thanks for your interest in Neuro Nurture. We&apos;ll be in touch soon
         with next steps for the Early Access program.
       </motion.p>
+      <motion.button
+        type="button"
+        onClick={onReset}
+        className="text-xs text-primary hover:text-primary-dark underline underline-offset-2 transition-colors"
+        initial={reducedMotion ? {} : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        Register another person
+      </motion.button>
     </motion.div>
   );
 }
