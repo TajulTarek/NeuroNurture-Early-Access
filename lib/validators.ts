@@ -20,10 +20,10 @@ export const parentSchema = z.object({
     .max(100, "Name must be 100 characters or less")
     .trim(),
   childAge: z
-    .number({ invalid_type_error: "Age must be a number" })
-    .int("Age must be a whole number")
-    .min(0, "Age must be at least 0")
-    .max(25, "Age must be 25 or less"),
+    .number({ error: "Age must be a valid number" })
+    .int({ error: "Age must be a whole number" })
+    .min(0, { error: "Age must be at least 0" })
+    .max(25, { error: "Age must be 25 or less" }),
 });
 
 export const schoolSchema = z.object({

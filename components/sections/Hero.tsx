@@ -235,7 +235,7 @@ export default function Hero() {
       <VideoModal
         isOpen={showDemo}
         onClose={() => setShowDemo(false)}
-        src="/videos/demo.mp4"
+        youtubeId="NR8fZ1AwcJQ"
       />
     </section>
   );

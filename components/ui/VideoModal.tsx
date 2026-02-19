@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { X } from "lucide-react";
 
 interface VideoModalProps {
   isOpen: boolean;
   onClose: () => void;
-  src: string;
+  youtubeId: string;
 }
 
-export default function VideoModal({ isOpen, onClose, src }: VideoModalProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+export default function VideoModal({ isOpen, onClose, youtubeId }: VideoModalProps) {
   const prefersReducedMotion = useReducedMotion();
 
   // Close on Escape
@@ -32,13 +31,6 @@ export default function VideoModal({ isOpen, onClose, src }: VideoModalProps) {
       document.body.style.overflow = "";
     };
   }, [isOpen, handleKeyDown]);
-
-  // Pause video when modal closes
-  useEffect(() => {
-    if (!isOpen && videoRef.current) {
-      videoRef.current.pause();
-    }
-  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -76,20 +68,16 @@ export default function VideoModal({ isOpen, onClose, src }: VideoModalProps) {
               <X size={20} />
             </button>
 
-            {/* Video Container */}
+            {/* YouTube Embed */}
             <div className="glass rounded-card overflow-hidden shadow-glow-lg border border-primary/20">
               <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
-                <video
-                  ref={videoRef}
-                  src={src}
-                  controls
-                  autoPlay
-                  muted
-                  playsInline
-                  className="w-full h-full object-contain bg-black"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                <iframe
+                  src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&rel=0`}
+                  title="Neuro Nurture Demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
               </div>
             </div>
           </motion.div>
