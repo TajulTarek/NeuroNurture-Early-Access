@@ -9,29 +9,29 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Neuro Nurture — The Future of Neurological Care",
+  title: "Neuro Nurture — Game-based Autism Support, Guided by AI",
   description:
-    "Neuro Nurture unifies AI-powered signal capture, cognitive analytics, and care coordination into one platform for the next generation of neurological care.",
+    "Neuro Nurture turns play into developmental insight — capturing behavioral signals, surfacing AI-powered patterns, and guiding support across home, school, and clinic.",
   keywords: [
-    "neurology",
-    "AI healthcare",
-    "neurological care",
-    "cognitive analytics",
-    "brain health",
-    "clinical platform",
+    "autism support",
+    "developmental screening",
+    "AI-powered insights",
+    "game-based therapy",
+    "child development",
+    "behavioral signals",
   ],
   openGraph: {
-    title: "Neuro Nurture — The Future of Neurological Care",
+    title: "Neuro Nurture — Game-based Autism Support, Guided by AI",
     description:
-      "AI-powered neurological care platform unifying signal capture, analytics, and care coordination.",
+      "Continuous monitoring, early screening support, and evidence-informed guidance — across home, school, and clinic.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Neuro Nurture — The Future of Neurological Care",
+    title: "Neuro Nurture — Game-based Autism Support, Guided by AI",
     description:
-      "AI-powered neurological care platform unifying signal capture, analytics, and care coordination.",
+      "Continuous monitoring, early screening support, and evidence-informed guidance — across home, school, and clinic.",
   },
 };
 
