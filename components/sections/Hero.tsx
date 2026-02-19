@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { Sparkles } from "lucide-react";
 import AnimatedBlob from "@/components/ui/AnimatedBlob";
 import Button from "@/components/ui/Button";
+import VideoModal from "@/components/ui/VideoModal";
 
 const TABS = ["Overview", "Progress", "Insights"] as const;
 
@@ -17,6 +18,7 @@ const METRICS = [
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("Overview");
+  const [showDemo, setShowDemo] = useState(false);
 
   const handleScroll = (id: string) => {
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -92,7 +94,7 @@ export default function Hero() {
             </Button>
             <Button
               variant="ghost"
-              onClick={() => handleScroll("#solution")}
+              onClick={() => setShowDemo(true)}
             >
               Watch Demo
             </Button>
@@ -228,6 +230,13 @@ export default function Hero() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Demo Video Modal */}
+      <VideoModal
+        isOpen={showDemo}
+        onClose={() => setShowDemo(false)}
+        src="/videos/demo.mp4"
+      />
     </section>
   );
 }
